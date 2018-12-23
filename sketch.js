@@ -1,9 +1,14 @@
-const maxNum = 100;
+let maxNum = 2304;
+let step = 1;
+let slider;
 let bubble;
 
 function setup() {
 	createCanvas(625, 625);
 	background(0);
+
+	slider = createSlider(1, maxNum, 1, maxNum/10);
+	slider.position(0, 630);
 
 	let options = [];
 	for (let i = 0; i < maxNum; i++) {
@@ -17,7 +22,11 @@ function setup() {
 }
 
 function draw() {
-	bubble.step();
+	step = slider.value();
+
+	for(let i = 0; i < step; i++) {
+		bubble.step();
+	}
 	display(bubble.getCurrent());
 }
 

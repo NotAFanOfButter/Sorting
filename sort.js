@@ -21,22 +21,23 @@ class BubbleSort {
 
     step() {
         if (this.sorted.length < this.mixed.length) {
-            if (this.iterator < this.working.length - 1) {
+            if (this.iterator < this.working.length) {
                 if (this.working[this.iterator] > this.working[this.iterator + 1]) {
                     let temp = this.working[this.iterator];
                     this.working[this.iterator] = this.working[this.iterator + 1];
                     this.working[this.iterator + 1] = temp;
+
                 }
+                this.iterator++;
             } else {
                 this.sorted.unshift(this.working.pop());
                 this.iterator = 0;
             }
         }
-        this.iterator++;
     }
 
     getCurrent() {
-        let out = this.working.concat(this.sorted);
+        let out = this.working.concat(this.sorted)
         return out;
     }
 }
