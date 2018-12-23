@@ -13,13 +13,12 @@ function setup() {
 	let mixed = mixNumbers(options);
 	display(mixed);
 
-	let bubble = new BubbleSort(mixed);
-	bubble.sort();
-	display(bubble.sorted);
+	bubble = new BubbleSort(mixed);
 }
 
 function draw() {
-
+	bubble.step();
+	display(bubble.getCurrent());
 }
 
 const mixNumbers = function (options) {
