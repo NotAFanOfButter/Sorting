@@ -40,4 +40,9 @@ class BubbleSort {
         let out = this.working.concat(this.sorted)
         return out;
     }
+
+    getSorted() {
+        let out = this.sorted.splice(0);
+        return out;
+    }
 }
