@@ -1,4 +1,5 @@
-const maxNum = 4;
+const maxNum = 100;
+let bubble;
 
 function setup() {
 	createCanvas(625, 625);
@@ -11,6 +12,10 @@ function setup() {
 
 	let mixed = mixNumbers(options);
 	display(mixed);
+
+	let bubble = new BubbleSort(mixed);
+	bubble.sort();
+	display(bubble.sorted);
 }
 
 function draw() {
@@ -32,13 +37,13 @@ const mixNumbers = function (options) {
 	return mixed;
 }
 const display = function (arr) {
+	noStroke();
+	colorMode(HSB, maxNum)
 	let side = width/sqrt(maxNum);
 	let i = 0;
 	for(let row = 0; row < height/side; row++) {
 		for(let col = 0; col < width/side; col++) {
-			colorMode(HSB, maxNum)
 			fill(arr[i], maxNum, maxNum);
-			noStroke();
 			rect(col*side, row*side, side, side);
 			i++;
 		}
