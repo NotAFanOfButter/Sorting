@@ -6,13 +6,15 @@ let slider;
 let checkbox;
 let button;
 let resetButton;
+let select;
 
 let mixed;
-let bubble;
+let sorter;
 
 function setup() {
 	createCanvas(625, 625);
 	background(0);
+	//frameRate(1);
 
 	slider = createSlider(1, maxNum, 1, maxNum / 10);
 	slider.position(0, 630);
@@ -38,8 +40,30 @@ function setup() {
 		}
 		mixed = mixNumbers(options);
 		display(mixed);
-		bubble = new BubbleSort(mixed);
+		if (select.value() == "Bubble Sort") {
+			sorter = new BubbleSort(mixed);
+		} else if (select.value() == "Selection Sort") {
+			sorter = new SelectionSort(mixed);
+		}
 	});
+	select = createSelect();
+	select.position(340, 635);
+	select.option("Bubble Sort");
+	select.option("Selection Sort");
+	select.changed(() => {
+		let options = [];
+		for (let i = 0; i < maxNum; i++) {
+			options[i] = i;
+		}
+		mixed = mixNumbers(options);
+		display(mixed);
+		if (select.value() == "Bubble Sort") {
+			sorter = new BubbleSort(mixed);
+		} else if (select.value() == "Selection Sort") {
+			sorter = new SelectionSort(mixed);
+		}
+	});
+
 
 	let options = [];
 	for (let i = 0; i < maxNum; i++) {
@@ -49,22 +73,31 @@ function setup() {
 	mixed = mixNumbers(options);
 	display(mixed);
 
-	bubble = new BubbleSort(mixed);
+	sorter = new BubbleSort(mixed);
 }
 
 function draw() {
 	if (!paused) {
 		if (checkbox.checked()) {
-			let sortedBubble = new BubbleSort(mixed);
-			sortedBubble.sort();
-			display(sortedBubble.getSorted());
+			if (select.value() == "Bubble Sort") {
+				sortedArr = new BubbleSort(mixed);
+			} else if (select.value() == "Selection Sort") {
+				sortedArr = new SelectionSort(mixed);
+			}
+
+			sortedArr.sort();
+			display(sortedArr.getSorted());
 		} else {
 			step = slider.value();
 
 			for (let i = 0; i < step; i++) {
-				bubble.step();
+				sorter.step();
 			}
-			display(bubble.getCurrent());
+			if(sorter.done) {
+				display(sorter.getCurrent(), maxNum)
+			} else {
+				display(sorter.getCurrent(), sorter.iterator);
+			}
 		}
 	}
 }
@@ -83,14 +116,18 @@ const mixNumbers = function (options) {
 
 	return mixed;
 }
-const display = function (arr) {
+const display = function (arr, current) {
 	noStroke();
 	colorMode(HSB, maxNum)
 	let side = width / sqrt(maxNum);
 	let i = 0;
 	for (let row = 0; row < height / side; row++) {
 		for (let col = 0; col < width / side; col++) {
-			fill(arr[i], maxNum, maxNum);
+			if(i == current) {
+				fill(maxNum);
+			} else {
+				fill(arr[i], maxNum, maxNum);
+			}
 			rect(col * side, row * side, side, side);
 			i++;
 		}
