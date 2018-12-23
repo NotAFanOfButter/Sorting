@@ -1,4 +1,4 @@
-let maxNum = 100;
+let maxNum = 2304 //16384;
 let step = 1;
 let paused = false;
 
