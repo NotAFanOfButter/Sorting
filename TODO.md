@@ -1,3 +1,4 @@
 # TODO
 ### Sorting
-- [ ] Offset iterator by sorted
+- [x] Offset iterator by sorted
+- [x] Add input field for array size

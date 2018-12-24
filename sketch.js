@@ -7,6 +7,7 @@ let checkbox;
 let button;
 let resetButton;
 let select;
+let inputBox;
 
 let mixed;
 let sorter;
@@ -33,36 +34,16 @@ function setup() {
 	});
 	resetButton = createButton("Reset");
 	resetButton.position(280, 632);
-	resetButton.mousePressed(() => {
-		let options = [];
-		for (let i = 0; i < maxNum; i++) {
-			options[i] = i;
-		}
-		mixed = mixNumbers(options);
-		display(mixed);
-		if (select.value() == "Bubble Sort") {
-			sorter = new BubbleSort(mixed);
-		} else if (select.value() == "Selection Sort") {
-			sorter = new SelectionSort(mixed);
-		}
-	});
+	resetButton.mousePressed(reset) ;
 	select = createSelect();
 	select.position(340, 635);
 	select.option("Bubble Sort");
 	select.option("Selection Sort");
-	select.changed(() => {
-		let options = [];
-		for (let i = 0; i < maxNum; i++) {
-			options[i] = i;
-		}
-		mixed = mixNumbers(options);
-		display(mixed);
-		if (select.value() == "Bubble Sort") {
-			sorter = new BubbleSort(mixed);
-		} else if (select.value() == "Selection Sort") {
-			sorter = new SelectionSort(mixed);
-		}
-	});
+	select.changed(reset);
+	inputBox = createInput("Size of Array");
+	inputBox.style("width", "80px");
+	inputBox.position(5, 655);
+	inputBox.changed(() => {maxNum = inputBox.value(); reset()});
 
 
 	let options = [];
@@ -96,7 +77,7 @@ function draw() {
 			if(sorter.done) {
 				display(sorter.getCurrent(), maxNum)
 			} else {
-				display(sorter.getCurrent(), sorter.iterator);
+				display(sorter.getCurrent(), sorter.getIterator());
 			}
 		}
 	}
@@ -131,5 +112,19 @@ const display = function (arr, current) {
 			rect(col * side, row * side, side, side);
 			i++;
 		}
+	}
+}
+
+const reset = function() {
+	let options = [];
+	for (let i = 0; i < maxNum; i++) {
+		options[i] = i;
+	}
+	mixed = mixNumbers(options);
+	display(mixed);
+	if (select.value() == "Bubble Sort") {
+		sorter = new BubbleSort(mixed);
+	} else if (select.value() == "Selection Sort") {
+		sorter = new SelectionSort(mixed);
 	}
 }
