@@ -17,12 +17,10 @@ function setup() {
 	background(0);
 	//frameRate(1);
 
+	createP('');
 	slider = createSlider(1, maxNum, 1, maxNum / 10);
-	slider.position(0, 630);
 	checkbox = createCheckbox("Instant", false);
-	checkbox.position(150, 632);
 	button = createButton("Pause");
-	button.position(225, 632);
 	button.mousePressed(() => {
 		if (paused == false) {
 			paused = true;
@@ -33,16 +31,14 @@ function setup() {
 		}
 	});
 	resetButton = createButton("Reset");
-	resetButton.position(280, 632);
 	resetButton.mousePressed(reset) ;
 	select = createSelect();
-	select.position(340, 635);
 	select.option("Bubble Sort");
 	select.option("Selection Sort");
 	select.changed(reset);
+	createP('');
 	inputBox = createInput("Size of Array");
-	inputBox.style("width", "80px");
-	inputBox.position(5, 655);
+	inputBox.style("width", "100px");
 	inputBox.changed(() => {maxNum = inputBox.value(); reset()});
 
 
