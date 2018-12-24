@@ -77,7 +77,7 @@ function draw() {
 			if(sorter.done) {
 				display(sorter.getCurrent(), maxNum)
 			} else {
-				display(sorter.getCurrent(), sorter.iterator);
+				display(sorter.getCurrent(), sorter.getIterator());
 			}
 		}
 	}

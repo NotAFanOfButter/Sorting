@@ -48,6 +48,10 @@ class BubbleSort {
         let out = this.sorted.splice(0);
         return out;
     }
+
+    getIterator() {
+        return this.iterator;
+    }
 }
 
 class SelectionSort {
@@ -106,5 +110,9 @@ class SelectionSort {
     getSorted() {
         let out = this.sorted.splice(0);
         return out;
+    }
+
+    getIterator() {
+        return this.iterator + this.sorted.length;
     }
 }
