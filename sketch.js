@@ -40,6 +40,10 @@ function setup() {
 	inputBox = createInput("Size of Array");
 	inputBox.style("width", "100px");
 	inputBox.changed(() => {maxNum = inputBox.value(); reset()});
+	let allEls = selectAll('*');
+	for(let el of allEls) {
+		el.style("font-family", "OCR A Std, monospace");
+	}
 
 
 	let options = [];
