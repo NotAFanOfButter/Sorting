@@ -112,8 +112,6 @@ const reset = function () {
 		sorter = new SelectionSort(mixed);
 	}
 }
-<<<<<<< HEAD
-=======
 
 const processImage = function (image) {
 	image.resize(width, height);
@@ -202,4 +200,3 @@ const setDom = function () {
 		el.style("font-family", "OCR A Std, monospace");
 	}
 }
->>>>>>> backup
