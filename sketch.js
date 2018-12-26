@@ -136,8 +136,6 @@ const setImg = function () {
 	let out;
 	let rand = floor(random(3));
 
-	console.log(rand);
-
 	switch (rand) {
 		case 0:
 			out = loadImage('images/pug.jpg', processImage);
