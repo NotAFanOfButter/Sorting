@@ -26,7 +26,7 @@ function setup() {
 	setDom();
 
 	reset();
-	img = loadImage('pug.jpg', processImage);
+	img = setImg();
 }
 
 function draw() {
@@ -130,6 +130,27 @@ const imgFile = function (ifile) {
 	if (ifile.type === 'image') {
 		img = loadImage(ifile.data,processImage);
 	}
+}
+
+const setImg = function () {
+	let out;
+	let rand = floor(random(3));
+
+	console.log(rand);
+
+	switch (rand) {
+		case 0:
+			out = loadImage('images/pug.jpg', processImage);
+			break;
+		case 1:
+			out = loadImage('images/cute cat.jpg', processImage);
+			break;
+		case 2:
+			out = loadImage('images/cute dog.jpg', processImage);
+			break;
+	}
+
+	return out;
 }
 
 const setDom = function () {
