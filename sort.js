@@ -4,7 +4,7 @@ class BubbleSort {
         this.working = this.mixed.slice(0);
         this.sorted = [];
         this.iterator = 0;
-        this.done= false;
+        this.done = false;
     }
 
     sort() {
@@ -114,5 +114,82 @@ class SelectionSort {
 
     getIterator() {
         return this.iterator + this.sorted.length;
+    }
+}
+
+class InsertionSort {
+    constructor(arr) {
+        this.mixed = arr;
+        this.working = this.mixed.slice(0);
+        this.sorted = [];
+        this.iterator = -1;
+        this.latestIterator = -1;
+        this.done = false;
+    }
+
+    sort() {
+        while (this.sorted.length < this.mixed.length) {
+            this.sorted.push(this.working.shift());
+            let latestI = this.sorted.length-1;
+            for(let i = this.sorted.length-1; i >= 0; i--) {
+                if(this.sorted[i] > this.sorted[latestI]) {
+                    let temp = this.sorted[i];
+                    this.sorted[i] = this.sorted[latestI];
+                    this.sorted[latestI] = temp;
+                    latestI--;
+                }
+            }
+        }
+    }
+
+    step() {
+       if (this.sorted.length <= this.mixed.length) {
+            if(this.iterator >= 0) {
+                if(this.sorted[this.iterator] > this.sorted[this.latestIterator]) {
+                    let temp = this.sorted[this.iterator];
+                    this.sorted[this.iterator] = this.sorted[this.latestIterator];
+                    this.sorted[this.latestIterator] = temp;
+                    this.latestIterator--;
+                }
+                this.iterator--;
+            }
+            else {
+                this.sorted.push(this.working.shift());
+                this.iterator = this.sorted.length-1;
+                this.latestIterator = this.sorted.length-1;
+            }
+        }
+        else if (this.sorted.length >= this.mixed.length){
+            if(this.iterator >= 0) {
+                if(this.sorted[this.iterator] > this.sorted[this.latestIterator]) {
+                    let temp = this.sorted[this.iterator];
+                    this.sorted[this.iterator] = this.sorted[this.latestIterator];
+                    this.sorted[this.latestIterator] = temp;
+                    this.latestIterator--;
+                }
+                this.iterator--;
+            }
+            else {
+                this.sorted.push(this.working.shift());
+                this.iterator = this.sorted.length-1;
+                this.latestIterator = this.sorted.length-1;
+            }
+            
+            this.done = true;
+        }
+    }
+
+    getCurrent() {
+        let out = this.sorted.concat(this.working)
+        return out;
+    }
+
+    getSorted() {
+        let out = this.sorted.splice(0);
+        return out;
+    }
+
+    getIterator() {
+        return this.iterator;
     }
 }

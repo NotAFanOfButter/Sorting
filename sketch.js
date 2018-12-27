@@ -17,8 +17,9 @@ let imgArr = [];
 let mixed;
 let sorter;
 
+let timed;
+
 function setup() {
-	stdFrame = frameRate();
 	createCanvas(625, 625);
 	background(0);
 	//frameRate(1);
@@ -27,25 +28,29 @@ function setup() {
 
 	reset();
 	img = setImg();
+	timed = false;
 }
 
 function draw() {
 	if (!paused) {
-		sorter = setSorter(select.value());
 		if (checkbox.checked()) {
+			sortedArr = setSorter(select.value());
 			sortedArr.sort();
 			display(sortedArr.getSorted());
-		} else {
-			step = slider.value();
-
+		} else if (!sorter.done) {
 			for (let i = 0; i < step; i++) {
 				sorter.step();
 			}
-			if (sorter.done) {
-				display(sorter.getCurrent(), maxNum)
-			} else {
-				display(sorter.getCurrent(), sorter.getIterator());
-			}
+			if (!timed) {
+				console.time('sort');
+				timed = true;
+			};
+			display(sorter.getCurrent(), sorter.getIterator());
+
+		}
+		else {
+			if(timed) {console.timeEnd('sort'); timed = false;};
+			display(sorter.getCurrent(), maxNum);
 		}
 	}
 }
@@ -104,15 +109,15 @@ const reset = function () {
 	sorter = setSorter(select.value());
 }
 
-const setSorter = function(type) {
+const setSorter = function (type) {
 	let out;
 	if (type == "Bubble Sort") {
 		out = new BubbleSort(mixed);
-	}
-	else if (type == "Selection Sort") {
+	} else if (type == "Selection Sort") {
 		out = new SelectionSort(mixed);
-	}
-	else {
+	} else if (type == "Insertion Sort") {
+		out = new InsertionSort(mixed);
+	} else {
 		out = null;
 	}
 
@@ -134,15 +139,13 @@ const processImage = function (image) {
 
 const imgFile = function (ifile) {
 	if (ifile.type === 'image') {
-		img = loadImage(ifile.data,processImage);
+		img = loadImage(ifile.data, processImage);
 	}
 }
 
 const setImg = function () {
 	let out;
 	let rand = floor(random(3));
-
-	console.log(rand);
 
 	switch (rand) {
 		case 0:
@@ -159,9 +162,26 @@ const setImg = function () {
 	return out;
 }
 
+function keyTyped() {
+	if (key === ' ') {
+		if (paused === false) {
+			paused = true;
+			button.html("Play");
+		} else {
+			paused = false;
+			button.html("Pause");
+		}
+	}
+}
+
 const setDom = function () {
 	createP('');
-	slider = createSlider(1, maxNum, 1, maxNum / 10);
+	let maxSqrt = sqrt(maxNum);
+	slider = createSlider(1, maxSqrt, 1, maxSqrt / 10);
+	slider.input(() => {
+		step = pow(slider.value(), 2);
+	});
+	step = pow(slider.value(), 2);
 	checkbox = createCheckbox("Realtime", false);
 	imgCheckbox = createCheckbox("Image", false);
 	imgCheckbox.position(100, width + 55);
@@ -183,6 +203,7 @@ const setDom = function () {
 	select = createSelect();
 	select.option("Bubble Sort");
 	select.option("Selection Sort");
+	select.option("Insertion Sort");
 	select.input(() => {
 		reset();
 		if (imgCheckbox.checked()) {
