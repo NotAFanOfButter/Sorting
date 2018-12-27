@@ -31,13 +31,8 @@ function setup() {
 
 function draw() {
 	if (!paused) {
+		sorter = setSorter(select.value());
 		if (checkbox.checked()) {
-			if (select.value() == "Bubble Sort") {
-				sortedArr = new BubbleSort(mixed);
-			} else if (select.value() == "Selection Sort") {
-				sortedArr = new SelectionSort(mixed);
-			}
-
 			sortedArr.sort();
 			display(sortedArr.getSorted());
 		} else {
@@ -106,11 +101,22 @@ const reset = function () {
 	}
 	mixed = mixNumbers(options);
 	display(mixed);
-	if (select.value() == "Bubble Sort") {
-		sorter = new BubbleSort(mixed);
-	} else if (select.value() == "Selection Sort") {
-		sorter = new SelectionSort(mixed);
+	sorter = setSorter(select.value());
+}
+
+const setSorter = function(type) {
+	let out;
+	if (type == "Bubble Sort") {
+		out = new BubbleSort(mixed);
 	}
+	else if (type == "Selection Sort") {
+		out = new SelectionSort(mixed);
+	}
+	else {
+		out = null;
+	}
+
+	return out
 }
 
 const processImage = function (image) {
