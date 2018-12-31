@@ -6,4 +6,4 @@
 - [x] Insertion Sort
 - [x] Quicksort
 - [ ] Shell Sort
-- [ ] Bogo Sort :smile
+- [ ] Bogo Sort :smile:
