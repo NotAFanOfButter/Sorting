@@ -1,5 +1,5 @@
-# README
-A javascript project for visualizing sorting algorithms
+# SORTING.js
+A javascript project for visualizing sorting algorithms  
 [Live Example](https://nerdling-s.github.io/Sorting/ "github-pages for this repo")
 
 # TODO
