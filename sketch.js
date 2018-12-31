@@ -117,7 +117,9 @@ const setSorter = function (type) {
 		out = new SelectionSort(mixed);
 	} else if (type == "Insertion Sort") {
 		out = new InsertionSort(mixed);
-	} else {
+	} else if(type == "Quicksort") {
+		out = new Quicksort(mixed);
+	}else {
 		out = null;
 	}
 
@@ -204,6 +206,7 @@ const setDom = function () {
 	select.option("Bubble Sort");
 	select.option("Selection Sort");
 	select.option("Insertion Sort");
+	select.option("Quicksort");
 	select.input(() => {
 		reset();
 		if (imgCheckbox.checked()) {
