@@ -1,4 +1,6 @@
-let maxNum = 2304 //16384;
+///<reference path="./p5.global-mode.d.ts" />
+
+let maxNum = 100;
 let step = 1;
 let paused = false;
 let stdFrame;
@@ -20,7 +22,7 @@ let sorter;
 let timed;
 
 function setup() {
-	createCanvas(625, 625);
+	createCanvas(676, 676);
 	background(0);
 	//frameRate(1);
 
@@ -47,9 +49,11 @@ function draw() {
 			};
 			display(sorter.getCurrent(), sorter.getIterator());
 
-		}
-		else {
-			if(timed) {console.timeEnd('sort'); timed = false;};
+		} else {
+			if (timed) {
+				console.timeEnd('sort');
+				timed = false;
+			};
 			display(sorter.getCurrent(), maxNum);
 		}
 	}
@@ -70,14 +74,27 @@ const mixNumbers = function (options) {
 	return mixed;
 }
 const display = function (arr, current) {
+	if (!Array.isArray(current)) {
+		current = [current];
+	}
 	let side = width / sqrt(maxNum);
 	let i = 0;
 	for (let row = 0; row < height / side; row++) {
 		for (let col = 0; col < width / side; col++) {
 			if (imgCheckbox.checked()) {
 				noStroke();
-				if (i == current) {
+				if (i == current[0]) {
 					fill(maxNum);
+					noStroke();
+					colorMode(HSB, maxNum);
+					rect(col * side, row * side, side, side);
+				} else if (i == current[1]) {
+					fill(maxNum);
+					noStroke();
+					colorMode(HSB, maxNum);
+					rect(col * side, row * side, side, side);
+				} else if (i == current[2]) {
+					fill(0);
 					noStroke();
 					colorMode(HSB, maxNum);
 					rect(col * side, row * side, side, side);
@@ -85,8 +102,12 @@ const display = function (arr, current) {
 					image(imgArr[arr[i]], col * side, row * side);
 				}
 			} else {
-				if (i == current) {
+				if (i == current[0]) {
 					fill(maxNum);
+				} else if (i == current[1]) {
+					fill(maxNum);
+				} else if (i == current[2]) {
+					fill(0);
 				} else {
 					fill(arr[i], maxNum, maxNum);
 				}
@@ -117,6 +138,8 @@ const setSorter = function (type) {
 		out = new SelectionSort(mixed);
 	} else if (type == "Insertion Sort") {
 		out = new InsertionSort(mixed);
+	} else if (type == "Quicksort") {
+		out = new Quicksort(mixed);
 	} else {
 		out = null;
 	}
@@ -186,7 +209,7 @@ const setDom = function () {
 	step = pow(slider.value(), 2);
 	checkbox = createCheckbox("Realtime", false);
 	imgCheckbox = createCheckbox("Image", false);
-	imgCheckbox.position(100, width + 55);
+	imgCheckbox.position(100, height + 48);
 	imgCheckbox.input(() => {
 		processImage(img);
 	});
@@ -206,6 +229,7 @@ const setDom = function () {
 	select.option("Bubble Sort");
 	select.option("Selection Sort");
 	select.option("Insertion Sort");
+	select.option("Quicksort");
 	select.input(() => {
 		reset();
 		if (imgCheckbox.checked()) {
