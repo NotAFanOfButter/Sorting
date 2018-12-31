@@ -4,6 +4,6 @@
 - [x] Add input field for array size
 - [x] Add option to display as image
 - [x] Insertion Sort
-- [ ] Quicksort
+- [x] Quicksort
 - [ ] Shell Sort
 - [ ] Bogo Sort :smile

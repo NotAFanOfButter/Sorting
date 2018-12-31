@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 ///<reference path="./p5.global-mode.d.ts" />
 
->>>>>>> master
 let maxNum = 100;
 let step = 1;
 let paused = false;
